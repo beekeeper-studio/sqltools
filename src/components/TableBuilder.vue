@@ -3,20 +3,33 @@
     <h1>Nom nom nom I'm the table builder</h1>
   </div>
 </template>
-<script lang="ts">
+<script>
 import Vue from 'vue'
-import { Column } from '../models/Column'
+import Knex from 'knex'
+import { ColumnType } from '../models/Column'
 
 export default Vue.extend({
   props: ['tableName', 'tableSchema', 'value', 'initialColumns', 'syntax'],
   data: () => ({
     supportedSyntaxes: ['mssql', 'mysql2', 'sqlite3', 'oracle', 'pg'],
-    columns: new Array<Column>(),
+    columns: [ { name: 'id', type: ColumnType.Increments, primary: true }],
+    foreignKeys: [],
     knex: null
   }),
   computed: {
     sql() {
-      return 'sql'
+      if (!this.knex) return ""
+
+      return this.knex.schema.createTable(this.tableName, (table) => {
+        this.columns.forEach((column) => {
+          const col = table[column.type](column.name)
+          if (column.primary) col.primary()
+          if (column.nullable) col.nullable()
+          if (column.comment) col.comment(col.comment)
+
+        })
+      }).toQuery()
+      
     }
   },
   watch: {
@@ -25,10 +38,11 @@ export default Vue.extend({
     }
   },
   mounted() {
-    if (!this.supportedSyntaxes.include(this.syntax)) {
+    if (!this.supportedSyntaxes.includes(this.syntax)) {
       throw `${this.syntax} is not supported. Supported: ${this.supportedSyntaxes.join(", ")}`
     }
-    this.knex = null // set this to knex syntax.
+    this.knex = Knex({ client: this.syntax })
+    window.knex = this.knex
   }
 })
 </script>

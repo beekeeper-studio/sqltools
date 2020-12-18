@@ -1,3 +1,5 @@
 # DOCUMENTATION
 
-<table-builder msg="Hello World"></table-builder>
+<ClientOnly>
+  <table-builder-display></table-builder-display>
+</ClientOnly>

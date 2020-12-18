@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "knex": "^0.21.14",
     "vue": "^2.6.11"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "loadash": "^1.0.0",
+    "node-noop": "^1.0.0",
     "typescript": "~3.9.3",
     "vue-cli-plugin-vuepress": "~0.1.1",
     "vue-template-compiler": "^2.6.11",

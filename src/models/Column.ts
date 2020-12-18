@@ -31,7 +31,7 @@ export interface Column {
   comment?: string
   defaultValue?: any
   unique?: boolean
-  primaryKey?: boolean
+  primary?: boolean
   length?: number
   precision?: number
   scale?: number

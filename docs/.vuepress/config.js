@@ -1,6 +1,6 @@
 
 const path = require('path');
-
+const webpack = require('webpack');
 const projectRoot = process.cwd();
 const alias = path.resolve(projectRoot, 'src');
 
@@ -25,6 +25,23 @@ module.exports = {
     config.devtool = false;
     // Match standard Vue CLI aliasing
     config.resolve.alias['@'] = alias;
+    config.externals = {
+      // Possible drivers for knex - we'll ignore them
+      'sqlite3': 'sqlite3',
+      'mariasql': 'mariasql',
+      'mssql': 'mssql',
+      'mysql': 'mysql',
+      'mysql2': 'mysql2',
+      'oracle': 'oracle',
+      'strong-oracle': 'strong-oracle',
+      'oracledb': 'oracledb',
+      'pg': 'pg',
+      'pg-query-stream': 'pg-query-stream'
+    },
+    config.plugins = [
+      new webpack.NormalModuleReplacementPlugin(/m[sy]sql2?|oracle(db)?|sqlite3/, "node-noop"),
+    ]
+
   },
   plugins: [
     ['vuepress-plugin-typescript', {
