@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "docs:build": "vuepress build docs",
-    "docs:dev": "vuepress dev docs"
+    "app:serve": "vue-cli-service serve",
+    "app:build": "vue-cli-service build",
+    "components:build": "vue-cli-service build --target lib --name sqltools ./src/components.js",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -29,10 +28,7 @@
     "node-noop": "^1.0.0",
     "typescript": "~3.9.3",
     "vue-cli-plugin-vuepress": "~0.1.1",
-    "vue-template-compiler": "^2.6.11",
-    "vuepress": "^1.7.1",
-    "vuepress-plugin-typescript": "^0.3.1",
-    "vuepress-types": "^0.9.4"
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
