@@ -1,3 +1,3 @@
 # DOCUMENTATION
 
-<hello-world msg="Hello World"></hello-world>
+<table-builder msg="Hello World"></table-builder>

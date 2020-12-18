@@ -3,12 +3,15 @@
     <h1>Nom nom nom I'm the table builder</h1>
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { Column } from '../models/Column'
+
+export default Vue.extend({
   props: ['tableName', 'tableSchema', 'value', 'initialColumns', 'syntax'],
   data: () => ({
     supportedSyntaxes: ['mssql', 'mysql2', 'sqlite3', 'oracle', 'pg'],
-    columns: [],
+    columns: new Array<Column>(),
     knex: null
   }),
   computed: {
@@ -27,5 +30,5 @@ export default {
     }
     this.knex = null // set this to knex syntax.
   }
-}
+})
 </script>
