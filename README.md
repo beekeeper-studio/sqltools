@@ -2,12 +2,13 @@
 
 ## Project setup
 ```
+npm install -g yarn
 yarn install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn app:serve
 ```
 
 ### Compiles and minifies for production
