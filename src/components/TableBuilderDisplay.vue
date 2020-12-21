@@ -2,10 +2,8 @@
   <div class="table-builder container">
     <h1>Table Builder for {{syntaxText}}</h1>
     <div class="row">
-      <div class="col-md-8 card">
-        <div class="card-body">
+      <div class="col-md-8">
           <table-builder v-model="sql" :syntax="syntax" tableName="bananas"></table-builder>
-        </div>
       </div>
       <div class="col-md-4 card">
         <div class="card-body">

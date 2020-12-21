@@ -2,11 +2,16 @@
   <div class="table-builder">
     <div class="form">
       <div class="form-group">
-        <label for="tableName"></label>
+        <label for="tableName">Table Name</label>
         <input type="text" name="tableName" class="form-control" v-model="tableName">
       </div>
+      <h2 class="text-start">Table Columns</h2>
       <div v-for="(column, idx) in columns" :key="idx" class="form-group">
-        <column-builder :column="column"></column-builder>
+        <div class="card">
+          <div class="card-body">
+            <column-builder :column="column"></column-builder>
+          </div>
+        </div>
       </div>
       <div class="buttons">
         <a class="btn btn-primary" @click.prevent="addColumn">Add Column</a>
@@ -37,19 +42,7 @@ export default Vue.extend({
     columns: {
       deep: true,
       handler() {
-        if (!this.knex) {
-          this.sql = ""
-          return
-        }
-        this.sql = this.knex.schema.createTable(this.tableName, (table) => {
-        this.columns.forEach((column) => {
-          const col = table[column.type](column.name)
-          if (column.primary) col.primary()
-          if (column.nullable) col.nullable()
-          if (column.comment) col.comment(col.comment)
-
-        })
-      }).toQuery()
+        this.genSql()
       }
     },
     sql() {
@@ -62,8 +55,23 @@ export default Vue.extend({
     }
     this.knex = Knex({ client: this.syntax })
     window.knex = this.knex
+    this.genSql()
   },
   methods: {
+    genSql() {
+      if (!this.knex) {
+        this.sql = ""
+        return
+      }
+      this.sql = this.knex.schema.createTable(this.tableName, (table) => {
+        this.columns.forEach((column) => {
+          const col = table[column.type](column.name)
+          if (column.primary) col.primary()
+          if (column.nullable) col.nullable()
+          if (column.comment) col.comment(col.comment)
+        })
+      }).toQuery()
+    },
     addColumn() {
       this.columns.push({
         name: `column_${this.columns.length + 1}`,

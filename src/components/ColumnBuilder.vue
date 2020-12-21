@@ -1,8 +1,9 @@
 <template>
   <div class="column-builder">
+    <!-- TODO (nicoll) - make the form inputs stretch horizontally for the core options, rather than stacking on top of each other -->
     <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" v-model="column.name">
+      <label for="name" class="form-label">Name</label>
+      <input class="form-control" type="text" v-model="column.name">
     </div>
     <!-- TODO (nicoll): This should support all the fields in the Column model (eg primary / nullable, etc)
     The mapping of column type => supported features is in ColumnOptions -->
