@@ -7,7 +7,7 @@
       </div>
       <div class="col-md-4 card">
         <div class="card-body">
-          <!-- TODO - user should be able to click a 'copy' button to copy this to the clipboard -->
+          <!-- TODO (nicoll) - user should be able to click a 'copy' button to copy this to the clipboard -->
           <highlightjs language="sql" :code="formattedSql"></highlightjs>
         </div>
       </div>
