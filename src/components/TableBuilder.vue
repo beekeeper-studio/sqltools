@@ -6,6 +6,7 @@
         <input type="text" name="tableName" class="form-control" v-model="tableName">
       </div>
       <h2 class="text-start">Table Columns</h2>
+      <!-- TODO (nicoll): Make these re-sortable with drag-drop -->
       <div v-for="(column, idx) in columns" :key="idx" class="form-group">
         <div class="card">
           <div class="card-body">

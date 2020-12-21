@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import TableBuilder from './TableBuilder.vue'
+import TableBuilder from '../components/TableBuilder.vue'
 import Formatter from 'sql-formatter'
 export default {
   components: { TableBuilder },

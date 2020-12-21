@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "app:serve": "vue-cli-service serve",
+    "lint": "vue-cli-service lint",
     "app:build": "vue-cli-service build",
-    "components:build": "vue-cli-service build --target lib --name sqltools ./src/components.js",
-    "lint": "vue-cli-service lint"
+    "app:serve": "vue-cli-service serve",
+    "components:build": "vue-cli-service build --target lib --name sqltools ./src/components.js"
   },
   "dependencies": {
     "@popperjs/core": "^2.6.0",
@@ -15,13 +15,15 @@
     "highlight.js": "^10.4.1",
     "knex": "^0.21.14",
     "sql-formatter": "^2.3.3",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-typescript": "^5.0.2",
