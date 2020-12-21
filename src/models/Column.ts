@@ -7,7 +7,8 @@ export enum ColumnType {
   Text = 'text',
   String = 'string',
   Float = 'float',
-  Decimal = 'decimal'
+  Decimal = 'decimal',
+  Custom = 'custom' // TODO (nicoll): this should allow them to enter their own type. see knex docs for specificType function
 }
 
 export interface ColumnOption {

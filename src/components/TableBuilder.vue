@@ -1,26 +1,47 @@
 <template>
   <div class="table-builder">
-    <h1>Nom nom nom I'm the table builder</h1>
+    <div class="form">
+      <div class="form-group">
+        <label for="tableName"></label>
+        <input type="text" name="tableName" class="form-control" v-model="tableName">
+      </div>
+      <div v-for="(column, idx) in columns" :key="idx" class="form-group">
+        <column-builder :column="column"></column-builder>
+      </div>
+      <div class="buttons">
+        <a class="btn btn-primary" @click.prevent="addColumn">Add Column</a>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import Vue from 'vue'
 import Knex from 'knex'
 import { ColumnType } from '../models/Column'
+import ColumnBuilder from './ColumnBuilder'
 
 export default Vue.extend({
-  props: ['tableName', 'tableSchema', 'value', 'initialColumns', 'syntax'],
+  components: { ColumnBuilder },
+  props: ['tableSchema', 'value', 'initialColumns', 'syntax'],
   data: () => ({
     supportedSyntaxes: ['mssql', 'mysql2', 'sqlite3', 'oracle', 'pg'],
     columns: [ { name: 'id', type: ColumnType.Increments, primary: true }],
     foreignKeys: [],
-    knex: null
+    knex: null,
+    tableName: "new_table",
+    sql: ""
   }),
   computed: {
-    sql() {
-      if (!this.knex) return ""
-
-      return this.knex.schema.createTable(this.tableName, (table) => {
+  },
+  watch: {
+    columns: {
+      deep: true,
+      handler() {
+        if (!this.knex) {
+          this.sql = ""
+          return
+        }
+        this.sql = this.knex.schema.createTable(this.tableName, (table) => {
         this.columns.forEach((column) => {
           const col = table[column.type](column.name)
           if (column.primary) col.primary()
@@ -29,10 +50,8 @@ export default Vue.extend({
 
         })
       }).toQuery()
-      
-    }
-  },
-  watch: {
+      }
+    },
     sql() {
       this.$emit('input', this.sql)
     }
@@ -43,6 +62,14 @@ export default Vue.extend({
     }
     this.knex = Knex({ client: this.syntax })
     window.knex = this.knex
+  },
+  methods: {
+    addColumn() {
+      this.columns.push({
+        name: `column_${this.columns.length + 1}`,
+        type: ColumnType.String
+      })
+    }
   }
 })
 </script>
