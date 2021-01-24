@@ -37,6 +37,5 @@ export default {
       return this.syntaxStrings[this.syntax] || this.syntax
     }
   }
-
 }
 </script>

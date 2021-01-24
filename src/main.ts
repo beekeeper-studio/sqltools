@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueClipboard from 'vue-clipboard2'
+
 
 import 'bootstrap'
 import './assets/css/main.scss'
@@ -7,6 +9,7 @@ import hljs from 'highlight.js'
 import router from './router'
 Vue.config.productionTip = false
 Vue.use(hljs.vuePlugin)
+Vue.use(VueClipboard);
 
 // Notes
 // This is using bootstrap (getbootstrap.com) version 5 for layout and basic styling. We'll replace this later with our own styles
