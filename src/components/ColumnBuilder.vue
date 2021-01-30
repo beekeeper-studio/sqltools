@@ -11,10 +11,16 @@
 
       <div class= "col-md-4">
         <label for="inputColumn" class="form-label">Type Column</label>
-        <select id="inputColumn" class="form-select">
-          <option selected>Choose</option>
-          <option selected>Holi</option> 
+         <select id="inputColumn" class="form-select" v-model="column.type">
+          <option v-for="option in options" :key="option.name" :title="option.description" :value="option.name">
+            {{ option.name }}
+          </option>
         </select>
+      </div>
+      <!-- SPECIFIC SECTIONS YOU NEED: -->
+      <!-- primary, nullable, defaultValue -->
+      <div v-if="columnOptions.requiresValues">
+        <h3>VALUES HERE PLZ</h3>
       </div>
     </form>
 
@@ -25,15 +31,16 @@
   </div>
 </template>
 <script>
-import { ColumnTypeOptions } from '@/models/Column'
+import { ColumnTypeOptions } from '../models/Column'
 export default {
   props: ['column'],
   data: () => ({
+    options: ColumnTypeOptions
 
   }),
   computed: {
     columnOptions() {
-      return ColumnTypeOptions[this.column.type]
+      return ColumnTypeOptions.find(o => o.name === this.column.type) || {}
     }
   }
 

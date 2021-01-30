@@ -23,15 +23,15 @@
 <script>
 import Vue from 'vue'
 import Knex from 'knex'
-import { ColumnType } from '../models/Column'
 import ColumnBuilder from './ColumnBuilder'
+import { ColumnTypeOptions } from '../models/Column'
 
 export default Vue.extend({
   components: { ColumnBuilder },
   props: ['tableSchema', 'value', 'initialColumns', 'syntax'],
   data: () => ({
     supportedSyntaxes: ['mssql', 'mysql2', 'sqlite3', 'oracle', 'pg'],
-    columns: [ { name: 'id', type: ColumnType.Increments, primary: true }],
+    columns: [ { name: 'id', type: "increments", primary: true }],
     foreignKeys: [],
     knex: null,
     tableName: "new_table",
@@ -66,17 +66,28 @@ export default Vue.extend({
       }
       this.sql = this.knex.schema.createTable(this.tableName, (table) => {
         this.columns.forEach((column) => {
-          const col = table[column.type](column.name)
+
+          // table[column.type] is a FUNCTION
+          const columnOption = ColumnTypeOptions.find(c => c.name === column.type) || {}
+          
+          let col
+          if(columnOption.requiresValues) {
+            col = table[column.type](column.name, column.values || [])
+          } else {
+            col = table[column.type](column.name)
+          }
+ 
           if (column.primary) col.primary()
           if (column.nullable) col.nullable()
-          if (column.comment) col.comment(col.comment)
+          if (column.defaultValue) col.defaultTo(column.defaultValue)
+          if (column.comment) col.comment(column.comment)
         })
       }).toQuery()
     },
     addColumn() {
       this.columns.push({
         name: `column_${this.columns.length + 1}`,
-        type: ColumnType.String
+        type: "string"
       })
     }
   }
